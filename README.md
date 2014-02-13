@@ -1,5 +1,5 @@
-coffee-count
-============
+
+# [toast.meteor.com](toast.meteor.com)
 
 Toaster Dev teams simple coffee tracker.
 
