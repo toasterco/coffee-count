@@ -1,5 +1,4 @@
-
-# [toast.meteor.com](toast.meteor.com)
+# [toast.meteor.com](http://toast.meteor.com)
 
 Toaster Dev teams simple coffee tracker.
 
