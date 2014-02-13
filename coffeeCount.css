@@ -1,0 +1,11 @@
+/* CSS declarations go here */
+h1 {
+	font-family: sans-serif;
+}
+
+.coffee-button {
+	background: red;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+}

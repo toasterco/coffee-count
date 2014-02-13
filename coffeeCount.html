@@ -1,0 +1,21 @@
+<head>
+  <title>coffeeCount</title>
+</head>
+
+<body>
+  {{> main}}
+</body>
+
+<template name="main">
+  <h1>The Toaster Dev team has consumed {{coffees}} coffees so far today!</h1>
+  <div class="login-ui">
+  	{{loginButtons}}
+  </div>
+	{{> button}}
+</template>
+
+<template name="button">
+	{{#if currentUser}}
+		<button class="coffee-button">Click this if you drank a coffee!</button>
+  {{/if}}
+</template>
