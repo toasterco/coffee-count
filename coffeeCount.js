@@ -6,6 +6,7 @@ if (Meteor.isClient) {
     ensureEntry(dateString);
   });
 
+  // Returns the amount property of todays document in CoffeeTable.
   Template.main.coffees = function() {
     if (tableSub.ready()) {
       var doc = CoffeeTable.findOne({date: dateString});
@@ -17,10 +18,7 @@ if (Meteor.isClient) {
   };
 
   Template.main.events({
-    'click .login': function(e) {
-      e.preventDefault();
-      document.querySelector('.login-ui').style.display = 'block';
-    },
+    // Increment todays amount by one on big button click.
     'click .coffee-button': function(e) {
       var doc = CoffeeTable.findOne({date: dateString});
       if (doc) {
@@ -57,6 +55,7 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+  // Am I one of the final five?
   var cylons = ['adamcbrewer', 'gixo', 'cheeseen', 'stevenarcher'];
 
   var isCylon = function() {
