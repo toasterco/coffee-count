@@ -11,10 +11,10 @@ if (Meteor.isClient) {
     if (tableSub.ready()) {
       var doc = CoffeeTable.findOne({date: dateString});
       if (doc) {
-        return doc.amount;
+        return doc.amount || "no";
       }
     }
-    return 'a currently unquantified amount of';
+    return 'an unquantified amount of';
   };
 
   Template.main.events({
@@ -52,23 +52,4 @@ if (Meteor.isClient) {
     var year = date.getFullYear();
     return '' + day + month + year;
   }
-}
-
-if (Meteor.isServer) {
-  // Am I one of the final five?
-  var cylons = ['adamcbrewer', 'gixo', 'cheeseen', 'stevenarcher'];
-
-  var isCylon = function() {
-    var username = Meteor.user().services.github.username.toLowerCase();
-    return cylons.indexOf(username) !== -1;
-  };
-
-  CoffeeTable.allow({
-    insert: isCylon,
-    update: isCylon
-  });
-
-  Meteor.publish('CoffeeTable', function() {
-    return CoffeeTable.find({});
-  });
 }
