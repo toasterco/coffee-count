@@ -1,15 +1,35 @@
 var CoffeeTable = new Meteor.Collection('CoffeeTable');
 
 if (Meteor.isClient) {
-  var dateString = dateTime(new Date());
+  var ReactiveDate = function() {
+    this.date = new Date();
+    this.dep = new Deps.Dependency();
+  };
+
+  ReactiveDate.prototype.init = function() {
+    var self = this;
+    Meteor.setInterval(function() {
+      self.date = new Date();
+      self.dep.changed();
+    }, 10000);
+  };
+
+  ReactiveDate.prototype.get = function() {
+    this.dep.depend();
+    return this.date;
+  };
+
+  var date = new ReactiveDate();
+  date.init();
+
   var tableSub = Meteor.subscribe('CoffeeTable', function() {
-    ensureEntry(dateString);
+    ensureEntry(dateTime(date.get()));
   });
 
   // Returns the amount property of todays document in CoffeeTable.
   Template.main.coffees = function() {
     if (tableSub.ready()) {
-      var doc = CoffeeTable.findOne({date: dateString});
+      var doc = CoffeeTable.findOne({date: dateTime(date.get())});
       if (doc) {
         return doc.amount || "no";
       }
@@ -20,7 +40,7 @@ if (Meteor.isClient) {
   Template.main.events({
     // Increment todays amount by one on big button click.
     'click .coffee-button': function(e) {
-      var doc = CoffeeTable.findOne({date: dateString});
+      var doc = CoffeeTable.findOne({date: dateTime(date.get())});
       if (doc) {
         CoffeeTable.update(doc._id, {$inc: {amount: 1}});
       }
